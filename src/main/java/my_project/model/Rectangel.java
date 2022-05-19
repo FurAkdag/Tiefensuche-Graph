@@ -1,6 +1,7 @@
 package my_project.model;
 
 import KAGO_framework.model.GraphicalObject;
+import KAGO_framework.model.abitur.datenstrukturen.Vertex;
 import KAGO_framework.view.DrawTool;
 
 import java.awt.*;
@@ -9,16 +10,18 @@ import java.awt.*;
  * Repräsentiert eine Kugel (einen Kreis), der in eine Schlange eingefügt werden soll. Dabei muss jeder QueueBall immer
  * seinen Vorgänger kennen, damit er zu ihm Abstand halten kann.
  */
-public class Ball extends GraphicalObject {
+public class Rectangel extends GraphicalObject {
 
+    Vertex vertex;
     /**
      * Erzeugt einen neuen QueueBall
      * @param x Startposition x
      * @param y Startposition y
      */
-    public Ball(double x, double y){
+    public Rectangel(double x, double y,String id){
         this.x = x;
-        this.y = y;
+        this.y = y;;
+        vertex = new Vertex(id);
     }
 
 
@@ -27,10 +30,13 @@ public class Ball extends GraphicalObject {
      */
     @Override
     public void draw(DrawTool drawTool) {
-        drawTool.drawFilledCircle(x,y,20);
-        drawTool.setCurrentColor(Color.RED);
-        drawTool.drawCircle(x,y,10);
-        drawTool.drawCircle(x,y,5);
+        if(vertex.isMarked()){
+            drawTool.setCurrentColor(Color.RED);
+        }else{
+            drawTool.setCurrentColor(Color.BLACK);
+        }
+        drawTool.drawRectangle(x,y,40);
+        drawTool.drawText(x+15,y+25, vertex.getID());
     }
 
     /**
@@ -41,6 +47,10 @@ public class Ball extends GraphicalObject {
     @Override
     public void update(double dt){
 
+    }
+
+    public Vertex getVertex() {
+        return vertex;
     }
 
 }
