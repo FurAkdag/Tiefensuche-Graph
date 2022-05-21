@@ -7,15 +7,16 @@ import java.awt.*;
 
 public class CurrentPointer extends GraphicalObject {
 
-    double xt;
-    double yt;
-    boolean moving = false;
+    private double tX;
+    private double tY;
+    private boolean moving = false;
+    private double Ratio;
 
     public CurrentPointer(double x, double y){
         this.x = x;
         this.y = y;
-        xt = x;
-        yt = y;
+        tX = x;
+        tY = y;
     }
 
     public void draw(DrawTool drawTool) {
@@ -25,28 +26,39 @@ public class CurrentPointer extends GraphicalObject {
 
     @Override
     public void update(double dt){
-        if(x > xt){
-            x -= dt*5;
-        }else if(y < yt){
-            x += dt*5;
+        Ratio = (tY - y)/(tX - x);
+        if(Ratio != 0){
+            y += Ratio*10*dt;
+            x += 10*dt;
+        }else {
+            if (tX < x) {
+                x += 3 * dt;
+            } else if (tX > x) {
+                x -= 3 * dt;
+            }
+            if (tX < y) {
+                y += 3 * dt;
+            } else if (tY > y) {
+                y -= 3 * dt;
+            }
         }
-        if(y > yt){
-            y -= dt*5;
-        }else if(y < yt){
-            y += dt*5;
-        }
-        if(x > xt + 3 && x < xt -3 && y > yt +3 && y < yt-3){
+        if(x < tX + 5 && x > tX -5 && y < tY +5 && y > tY -5){
             moving = false;
         }else{
             moving = true;
         }
+
     }
 
-    public void setXt(double xt) {
-        this.xt = xt;
+    public void settX(double tX) {
+        this.tX = tX;
     }
 
-    public void setYt(double yt) {
-        this.yt = yt;
+    public void settY(double tY) {
+        this.tY = tY;
+    }
+
+    public boolean isMoving() {
+        return moving;
     }
 }

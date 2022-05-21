@@ -7,6 +7,7 @@ import KAGO_framework.model.abitur.datenstrukturen.Vertex;
 import my_project.model.CurrentPointer;
 import my_project.model.EdgePath;
 import my_project.model.Rectangel;
+import my_project.view.InputManager;
 
 /**
  * Ein Objekt der Klasse ProgramController dient dazu das Programm zu steuern. Die updateProgram - Methode wird
@@ -19,8 +20,10 @@ public class ProgramController {
 
     // Referenzen
     private ViewController viewController;  // diese Referenz soll auf ein Objekt der Klasse viewController zeigen. Über dieses Objekt wird das Fenster gesteuert.
-    List<EdgePath> edgePathList = new List<>();
-
+    private List<EdgePath> edgePathList = new List<>();
+    private CurrentPointer currentPointer;
+    private List<Double> xhelp;
+    private List<Double> yhelp;
     /**
      * Konstruktor
      * Dieser legt das Objekt der Klasse ProgramController an, das den Programmfluss steuert.
@@ -32,9 +35,13 @@ public class ProgramController {
 
     public ProgramController(ViewController viewController){
         this.viewController = viewController;
-        CurrentPointer currentPointer = new CurrentPointer(120,420);
+
+        currentPointer = new CurrentPointer(120,420);
         viewController.draw(currentPointer);
 
+        new InputManager(this,viewController);
+        xhelp = new List<>();
+        yhelp = new List<>();
     }
 
     /**
@@ -44,6 +51,13 @@ public class ProgramController {
     public void startProgram() {
         // Erstelle ein Objekt der Klasse Ball und lasse es zeichnen
         fillGraph();
+
+    }
+
+    public void Tiefensuche(){
+        Tiefensuche(graph.getVertices().getContent());
+        xhelp.toFirst();
+        yhelp.toFirst();
     }
 
     public void fillGraph(){
@@ -151,7 +165,13 @@ public class ProgramController {
         List<Vertex> friends = graph.getNeighbours(v);
         friends.toFirst();
         while(friends.hasAccess()){
-
+            if(!friends.getContent().isMarked()) {
+                xhelp.append(findEgde(v,friends.getContent()).getX1());
+                yhelp.append(findEgde(v,friends.getContent()).getY1());
+                xhelp.append(findEgde(v,friends.getContent()).getX2());
+                yhelp.append(findEgde(v,friends.getContent()).getY2());
+                Tiefensuche(friends.getContent());
+            }
             friends.next();
         }
     }
@@ -159,7 +179,7 @@ public class ProgramController {
     public EdgePath findEgde(Vertex v1, Vertex v2){
         edgePathList.toFirst();
         while(edgePathList.hasAccess()){
-            if(edgePathList.getContent().controllEdge(v1,v2)){
+            if(edgePathList.getContent().isEdge(v1,v2)){
                 return edgePathList.getContent();
             }
             edgePathList.next();
@@ -171,6 +191,13 @@ public class ProgramController {
      * @param dt Zeit seit letzter Frame
      */
     public void updateProgram(double dt){
-
+        if(xhelp.hasAccess()){
+            if(!currentPointer.isMoving()){
+                currentPointer.settX(xhelp.getContent());
+                currentPointer.settY(yhelp.getContent());
+                xhelp.remove();
+                yhelp.remove();
+            }
+        }
     }
 }

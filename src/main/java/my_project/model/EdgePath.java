@@ -9,13 +9,13 @@ import java.awt.*;
 
 public class EdgePath extends GraphicalObject {
 
-    Edge edge;
-    double x1;
-    double x2;
-    double y1;
-    double y2;
-    Vertex v1;
-    Vertex v2;
+    private Edge edge;
+    private double x1;
+    private double x2;
+    private double y1;
+    private double y2;
+    private Vertex v1;
+    private Vertex v2;
 
     public EdgePath(Vertex v1, Vertex v2, double x1, double y1, double x2, double y2){
         edge = new Edge(v1, v2,0);
@@ -54,8 +54,11 @@ public class EdgePath extends GraphicalObject {
     }
 
 
-    public boolean controllEdge(Vertex vertex1, Vertex vertex2){
+    public boolean isEdge(Vertex vertex1, Vertex vertex2){
         if(vertex1 == v1 && vertex2 == v2){
+            return true;
+        }
+        if(vertex1 == v2 && vertex2 == v1){
             return true;
         }
         return false;
