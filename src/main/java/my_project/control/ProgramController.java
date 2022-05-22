@@ -25,6 +25,7 @@ public class ProgramController {
     private List<Double> xhelp;
     private List<Double> yhelp;
     private Rectangel r1;
+    private List<Rectangel> rectangelList;
     /**
      * Konstruktor
      * Dieser legt das Objekt der Klasse ProgramController an, das den Programmfluss steuert.
@@ -43,6 +44,7 @@ public class ProgramController {
         new InputManager(this,viewController);
         xhelp = new List<>();
         yhelp = new List<>();
+        rectangelList = new List<>();
     }
 
     /**
@@ -59,6 +61,7 @@ public class ProgramController {
         Tiefensuche(r1);
         xhelp.toFirst();
         yhelp.toFirst();
+        rectangelList.toFirst();
     }
 
     public void fillGraph(){
@@ -162,6 +165,7 @@ public class ProgramController {
     }
 
     public void Tiefensuche(Rectangel r){
+        rectangelList.append(r);
         r.getVertex().setMark(true);
         List<Rectangel> friends = findFriends(r);
         friends.toFirst();
@@ -212,8 +216,10 @@ public class ProgramController {
             if(!currentPointer.isMoving()){
                 currentPointer.settX(xhelp.getContent());
                 currentPointer.settY(yhelp.getContent());
+                rectangelList.getContent().setMarked(true);
                 xhelp.remove();
                 yhelp.remove();
+                rectangelList.remove();
             }
         }
     }
