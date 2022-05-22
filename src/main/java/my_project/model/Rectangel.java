@@ -1,7 +1,8 @@
 package my_project.model;
 
 import KAGO_framework.model.GraphicalObject;
-import KAGO_framework.model.abitur.datenstrukturen.Vertex;
+import KAGO_framework.model.abitur.datenstrukturen.*;
+import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.view.DrawTool;
 
 import java.awt.*;
@@ -12,7 +13,8 @@ import java.awt.*;
  */
 public class Rectangel extends GraphicalObject {
 
-    Vertex vertex;
+    private Vertex vertex;
+    private boolean marked = false;
     /**
      * Erzeugt einen neuen QueueBall
      * @param x Startposition x
@@ -24,13 +26,12 @@ public class Rectangel extends GraphicalObject {
         vertex = new Vertex(id);
     }
 
-
     /**
      * Selbsterklärend: zeichnet den QueueBall. Wird vom Framework automatisch aufgerufen (jede Frame 1x).
      */
     @Override
     public void draw(DrawTool drawTool) {
-        if(vertex.isMarked()){
+        if(marked){
             drawTool.setCurrentColor(Color.RED);
         }else{
             drawTool.setCurrentColor(Color.BLACK);
@@ -39,11 +40,17 @@ public class Rectangel extends GraphicalObject {
         drawTool.drawText(x+15,y+25, vertex.getID());
     }
 
+    public void setMarked(boolean marked) {
+        this.marked = marked;
+    }
+
     /**
      * Wird mit jeder Frame vom Framework aufgerufen und dient zur Manipulation des Objekts im Verlauf
      * der Zeit.
      * @param dt die Sekunden, die seit dem letzten Aufruf von update vergangen sind
      */
+
+
     @Override
     public void update(double dt){
 

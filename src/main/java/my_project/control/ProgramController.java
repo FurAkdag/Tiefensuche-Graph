@@ -24,6 +24,7 @@ public class ProgramController {
     private CurrentPointer currentPointer;
     private List<Double> xhelp;
     private List<Double> yhelp;
+    private Rectangel r1;
     /**
      * Konstruktor
      * Dieser legt das Objekt der Klasse ProgramController an, das den Programmfluss steuert.
@@ -55,79 +56,79 @@ public class ProgramController {
     }
 
     public void Tiefensuche(){
-        Tiefensuche(graph.getVertices().getContent());
+        Tiefensuche(r1);
         xhelp.toFirst();
         yhelp.toFirst();
     }
 
     public void fillGraph(){
-        Rectangel r1 = new Rectangel(100,400,"1");
+        r1 = new Rectangel(100,400,"1");
         graph.addVertex(r1.getVertex());
-        Rectangel r2 = new Rectangel(300,300,"2");
+        Rectangel r2 = new Rectangel(300,200,"2");
         graph.addVertex(r2.getVertex());
         Rectangel r3 = new Rectangel(300,400,"3");
         graph.addVertex(r3.getVertex());
-        Rectangel r4 = new Rectangel(300,500,"4");
+        Rectangel r4 = new Rectangel(300,600,"4");
         graph.addVertex(r4.getVertex());
-        Rectangel r5 = new Rectangel(500,250,"5");
+        Rectangel r5 = new Rectangel(500,200,"5");
         graph.addVertex(r5.getVertex());
-        Rectangel r6 = new Rectangel(500,350,"6");
+        Rectangel r6 = new Rectangel(500,400,"6");
         graph.addVertex(r6.getVertex());
-        Rectangel r7 = new Rectangel(500,450,"7");
+        Rectangel r7 = new Rectangel(500,600,"7");
         graph.addVertex(r7.getVertex());
-        Rectangel r8 = new Rectangel(500,600,"8");
+        Rectangel r8 = new Rectangel(500,800,"8");
         graph.addVertex(r8.getVertex());
-        Rectangel r9 = new Rectangel(700,250,"9");
+        Rectangel r9 = new Rectangel(700,200,"9");
         graph.addVertex(r9.getVertex());
         Rectangel r10 = new Rectangel(700,400,"10");
         graph.addVertex(r9.getVertex());
-        Rectangel r11 = new Rectangel(700,650,"11");
+        Rectangel r11 = new Rectangel(700,600,"11");
         graph.addVertex(r11.getVertex());
 
         //Edges
-        EdgePath e12 = new EdgePath(r1.getVertex(), r2.getVertex(), r1.getX()+40, r1.getY(),r2.getX(), r2.getY()+40);
+        EdgePath e12 = new EdgePath(r1, r2, r1.getX()+40, r1.getY(),r2.getX(), r2.getY()+40);
         graph.addEdge(e12.getEdge());
         edgePathList.append(e12);
-        EdgePath e14 = new EdgePath(r1.getVertex(), r4.getVertex(), r1.getX()+40, r1.getY()+40,r4.getX(), r4.getY());
+        EdgePath e14 = new EdgePath(r1, r4, r1.getX()+40, r1.getY()+40,r4.getX(), r4.getY());
         graph.addEdge(e14.getEdge());
         edgePathList.append(e14);
-        EdgePath e25 = new EdgePath(r2.getVertex(), r5.getVertex(), r2.getX()+40, r2.getY(),r5.getX(), r5.getY());
+        EdgePath e25 = new EdgePath(r2, r5, r2.getX()+40, r2.getY()+20,r5.getX(), r5.getY()+20);
         graph.addEdge(e25.getEdge());
         edgePathList.append(e25);
-        EdgePath e35 = new EdgePath(r3.getVertex(), r5.getVertex(), r3.getX()+40, r3.getY(),r5.getX(), r5.getY()+40);
+        EdgePath e35 = new EdgePath(r3, r5, r3.getX()+40, r3.getY(),r5.getX(), r5.getY()+40);
         graph.addEdge(e35.getEdge());
         edgePathList.append(e35);
-        EdgePath e26 = new EdgePath(r2.getVertex(), r6.getVertex(), r2.getX()+40, r2.getY()+40,r6.getX(), r6.getY());
+        EdgePath e26 = new EdgePath(r2, r6, r2.getX()+40, r2.getY()+40,r6.getX(), r6.getY());
         graph.addEdge(e26.getEdge());
         edgePathList.append(e26);
-        EdgePath e36 = new EdgePath(r3.getVertex(), r6.getVertex(), r3.getX()+40, r3.getY(),r6.getX(), r6.getY()+40);
+        EdgePath e36 = new EdgePath(r3, r6, r3.getX()+40, r3.getY()+20,r6.getX(), r6.getY()+20);
         graph.addEdge(e36.getEdge());
         edgePathList.append(e36);
-        EdgePath e37 = new EdgePath(r3.getVertex(), r7.getVertex(), r3.getX()+40, r3.getY()+40,r7.getX(), r7.getY());
+        EdgePath e37 = new EdgePath(r3, r7, r3.getX()+40, r3.getY()+40,r7.getX(), r7.getY());
         graph.addEdge(e37.getEdge());
         edgePathList.append(e37);
-        EdgePath e47 = new EdgePath(r4.getVertex(), r7.getVertex(), r4.getX()+40, r4.getY(),r7.getX(), r7.getY()+40);
+        EdgePath e47 = new EdgePath(r4, r7, r4.getX()+40, r4.getY()+20,r7.getX(), r7.getY()+20);
         graph.addEdge(e47.getEdge());
         edgePathList.append(e47);
-        EdgePath e48 = new EdgePath(r4.getVertex(), r8.getVertex(), r4.getX()+40, r4.getY()+40,r8.getX(), r8.getY());
+        EdgePath e48 = new EdgePath(r4, r8, r4.getX()+40, r4.getY()+40,r8.getX(), r8.getY());
         graph.addEdge(e48.getEdge());
         edgePathList.append(e48);
-        EdgePath e78 = new EdgePath(r7.getVertex(), r8.getVertex(), r7.getX()+20, r7.getY()+40,r8.getX()+20, r8.getY());
+        EdgePath e78 = new EdgePath(r7, r8, r7.getX()+20, r7.getY()+40,r8.getX()+20, r8.getY());
         graph.addEdge(e78.getEdge());
         edgePathList.append(e78);
-        EdgePath e59 = new EdgePath(r5.getVertex(), r9.getVertex(), r5.getX()+40, r5.getY(),r9.getX(), r9.getY());
+        EdgePath e59 = new EdgePath(r5, r9, r5.getX()+40, r5.getY()+20,r9.getX(), r9.getY()+20);
         graph.addEdge(e59.getEdge());
         edgePathList.append(e59);
-        EdgePath e69 = new EdgePath(r6.getVertex(), r9.getVertex(), r6.getX()+40, r6.getY(),r9.getX(), r9.getY()+40);
+        EdgePath e69 = new EdgePath(r6, r9, r6.getX()+40, r6.getY(),r9.getX(), r9.getY()+40);
         graph.addEdge(e69.getEdge());
         edgePathList.append(e69);
-        EdgePath e710 = new EdgePath(r7.getVertex(), r10.getVertex(), r7.getX()+40, r7.getY(),r10.getX(), r10.getY());
+        EdgePath e710 = new EdgePath(r7, r10, r7.getX()+40, r7.getY(),r10.getX(), r10.getY()+40);
         graph.addEdge(e710.getEdge());
         edgePathList.append(e710);
-        EdgePath e810 = new EdgePath(r8.getVertex(), r10.getVertex(), r8.getX()+40, r8.getY(),r10.getX(), r10.getY()+40);
+        EdgePath e810 = new EdgePath(r8, r10, r8.getX()+40, r8.getY(),r10.getX(), r10.getY()+40);
         graph.addEdge(e810.getEdge());
         edgePathList.append(e810);
-        EdgePath e910 = new EdgePath(r9.getVertex(), r10.getVertex(), r9.getX()+20, r9.getY()+40,r10.getX()+20, r10.getY());
+        EdgePath e910 = new EdgePath(r9, r10, r9.getX()+20, r9.getY()+40,r10.getX()+20, r10.getY());
         graph.addEdge(e910.getEdge());
         edgePathList.append(e910);
 
@@ -160,31 +161,47 @@ public class ProgramController {
         viewController.draw(e910);
     }
 
-    public void Tiefensuche(Vertex v){
-        v.setMark(true);
-        List<Vertex> friends = graph.getNeighbours(v);
+    public void Tiefensuche(Rectangel r){
+        r.getVertex().setMark(true);
+        List<Rectangel> friends = findFriends(r);
         friends.toFirst();
         while(friends.hasAccess()){
-            if(!friends.getContent().isMarked()) {
-                xhelp.append(findEgde(v,friends.getContent()).getX1());
-                yhelp.append(findEgde(v,friends.getContent()).getY1());
-                xhelp.append(findEgde(v,friends.getContent()).getX2());
-                yhelp.append(findEgde(v,friends.getContent()).getY2());
+            if(!friends.getContent().getVertex().isMarked()) {
+                xhelp.append(friends.getContent().getX()+20);
+                yhelp.append(friends.getContent().getY()+20);
                 Tiefensuche(friends.getContent());
             }
             friends.next();
         }
+        xhelp.append(r.getX()+20);
+        yhelp.append(r.getY()+20);
     }
 
-    public EdgePath findEgde(Vertex v1, Vertex v2){
+    public EdgePath findEgde(Rectangel r1, Rectangel r2){
         edgePathList.toFirst();
         while(edgePathList.hasAccess()){
-            if(edgePathList.getContent().isEdge(v1,v2)){
+            if(edgePathList.getContent().isEdge(r1,r2)){
                 return edgePathList.getContent();
             }
             edgePathList.next();
         }
         return null;
+    }
+
+    public List<Rectangel> findFriends(Rectangel r){
+        List<Rectangel> result = new List<Rectangel>();
+
+        edgePathList.toFirst();
+        while (edgePathList.hasAccess()){
+
+            if(edgePathList.getContent().getR1() == r){
+                result.append(edgePathList.getContent().getR2());
+            }else if(edgePathList.getContent().getR2() == r){
+                result.append(edgePathList.getContent().getR1());
+            }
+            edgePathList.next();
+        }
+        return result;
     }
     /**
      * Aufruf mit jeder Frame

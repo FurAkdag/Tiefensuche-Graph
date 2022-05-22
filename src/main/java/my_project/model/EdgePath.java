@@ -14,17 +14,17 @@ public class EdgePath extends GraphicalObject {
     private double x2;
     private double y1;
     private double y2;
-    private Vertex v1;
-    private Vertex v2;
+    private Rectangel r1;
+    private Rectangel r2;
 
-    public EdgePath(Vertex v1, Vertex v2, double x1, double y1, double x2, double y2){
-        edge = new Edge(v1, v2,0);
+    public EdgePath(Rectangel r1, Rectangel r2, double x1, double y1, double x2, double y2){
+        edge = new Edge(r1.getVertex(), r2.getVertex(),0);
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
-        this.v1 = v1;
-        this.v2 = v2;
+        this.r1 = r1;
+        this.r2 = r2;
     }
 
     @Override
@@ -53,12 +53,19 @@ public class EdgePath extends GraphicalObject {
         return y2;
     }
 
+    public Rectangel getR1() {
+        return r1;
+    }
 
-    public boolean isEdge(Vertex vertex1, Vertex vertex2){
-        if(vertex1 == v1 && vertex2 == v2){
+    public Rectangel getR2() {
+        return r2;
+    }
+
+    public boolean isEdge(Rectangel rectangel1, Rectangel rectangel2){
+        if(rectangel1 == r1 && rectangel2 == r2){
             return true;
         }
-        if(vertex1 == v2 && vertex2 == v1){
+        if(rectangel1 == r2 && rectangel2 == r1){
             return true;
         }
         return false;
