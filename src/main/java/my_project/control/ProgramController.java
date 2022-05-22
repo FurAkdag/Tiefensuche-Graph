@@ -63,7 +63,6 @@ public class ProgramController {
         xhelp.toFirst();
         yhelp.toFirst();
         rectangelList.toFirst();
-        running = true;
 
     }
 
