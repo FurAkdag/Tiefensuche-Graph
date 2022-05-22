@@ -17,7 +17,6 @@ public class ProgramController {
 
     //Attribute
 
-
     // Referenzen
     private ViewController viewController;  // diese Referenz soll auf ein Objekt der Klasse viewController zeigen. Über dieses Objekt wird das Fenster gesteuert.
     private List<EdgePath> edgePathList = new List<>();
@@ -26,6 +25,8 @@ public class ProgramController {
     private List<Double> yhelp;
     private Rectangel r1;
     private List<Rectangel> rectangelList;
+    private List<Rectangel> allRectangel;
+
     /**
      * Konstruktor
      * Dieser legt das Objekt der Klasse ProgramController an, das den Programmfluss steuert.
@@ -37,7 +38,6 @@ public class ProgramController {
 
     public ProgramController(ViewController viewController){
         this.viewController = viewController;
-
         currentPointer = new CurrentPointer(120,420);
         viewController.draw(currentPointer);
 
@@ -45,6 +45,7 @@ public class ProgramController {
         xhelp = new List<>();
         yhelp = new List<>();
         rectangelList = new List<>();
+        allRectangel = new List<>();
     }
 
     /**
@@ -62,9 +63,30 @@ public class ProgramController {
         xhelp.toFirst();
         yhelp.toFirst();
         rectangelList.toFirst();
+        running = true;
+
+    }
+
+    public void reset(){
+            graph.setAllVertexMarks(false);
+            currentPointer.setX(120);
+            currentPointer.setY(420);
+            currentPointer.settX(120);
+            currentPointer.settY(420);
+            allRectangel.toFirst();
+            while (allRectangel.hasAccess()) {
+                allRectangel.getContent().setMarked(false);
+                allRectangel.next();
+            }
+            while(xhelp.hasAccess()){
+                xhelp.remove();
+                yhelp.remove();
+                rectangelList.remove();
+            }
     }
 
     public void fillGraph(){
+        //Recangel & Vertex
         r1 = new Rectangel(100,400,"1");
         graph.addVertex(r1.getVertex());
         Rectangel r2 = new Rectangel(300,200,"2");
@@ -83,10 +105,22 @@ public class ProgramController {
         graph.addVertex(r8.getVertex());
         Rectangel r9 = new Rectangel(700,200,"9");
         graph.addVertex(r9.getVertex());
-        Rectangel r10 = new Rectangel(700,400,"10");
+        Rectangel r10 = new Rectangel(700,600,"10");
         graph.addVertex(r9.getVertex());
-        Rectangel r11 = new Rectangel(700,600,"11");
+        Rectangel r11 = new Rectangel(700,800,"11");
         graph.addVertex(r11.getVertex());
+
+        allRectangel.append(r1);
+        allRectangel.append(r2);
+        allRectangel.append(r3);
+        allRectangel.append(r4);
+        allRectangel.append(r5);
+        allRectangel.append(r6);
+        allRectangel.append(r7);
+        allRectangel.append(r8);
+        allRectangel.append(r9);
+        allRectangel.append(r10);
+        allRectangel.append(r11);
 
         //Edges
         EdgePath e12 = new EdgePath(r1, r2, r1.getX()+40, r1.getY(),r2.getX(), r2.getY()+40);
@@ -122,10 +156,7 @@ public class ProgramController {
         EdgePath e59 = new EdgePath(r5, r9, r5.getX()+40, r5.getY()+20,r9.getX(), r9.getY()+20);
         graph.addEdge(e59.getEdge());
         edgePathList.append(e59);
-        EdgePath e69 = new EdgePath(r6, r9, r6.getX()+40, r6.getY(),r9.getX(), r9.getY()+40);
-        graph.addEdge(e69.getEdge());
-        edgePathList.append(e69);
-        EdgePath e710 = new EdgePath(r7, r10, r7.getX()+40, r7.getY(),r10.getX(), r10.getY()+40);
+        EdgePath e710 = new EdgePath(r7, r10, r7.getX()+40, r7.getY()+20,r10.getX(), r10.getY()+20);
         graph.addEdge(e710.getEdge());
         edgePathList.append(e710);
         EdgePath e810 = new EdgePath(r8, r10, r8.getX()+40, r8.getY(),r10.getX(), r10.getY()+40);
@@ -157,7 +188,6 @@ public class ProgramController {
         viewController.draw(e47);
         viewController.draw(e48);
         viewController.draw(e59);
-        viewController.draw(e69);
         viewController.draw(e78);
         viewController.draw(e710);
         viewController.draw(e810);
@@ -170,6 +200,9 @@ public class ProgramController {
         List<Rectangel> friends = findFriends(r);
         friends.toFirst();
         while(friends.hasAccess()){
+            xhelp.append(r.getX()+20);
+            yhelp.append(r.getY()+20);
+            rectangelList.append(r);
             if(!friends.getContent().getVertex().isMarked()) {
                 xhelp.append(friends.getContent().getX()+20);
                 yhelp.append(friends.getContent().getY()+20);
@@ -179,6 +212,7 @@ public class ProgramController {
         }
         xhelp.append(r.getX()+20);
         yhelp.append(r.getY()+20);
+        rectangelList.append(r);
     }
 
     public EdgePath findEgde(Rectangel r1, Rectangel r2){
@@ -216,11 +250,14 @@ public class ProgramController {
             if(!currentPointer.isMoving()){
                 currentPointer.settX(xhelp.getContent());
                 currentPointer.settY(yhelp.getContent());
-                rectangelList.getContent().setMarked(true);
                 xhelp.remove();
                 yhelp.remove();
-                rectangelList.remove();
+                if(rectangelList.hasAccess()){
+                    rectangelList.getContent().setMarked(true);
+                    rectangelList.remove();
+                }
             }
         }
     }
+
 }

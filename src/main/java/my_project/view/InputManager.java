@@ -28,7 +28,10 @@ public class InputManager extends InteractiveGraphicalObject {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        programController.Tiefensuche();
+        if(e.getButton() == MouseEvent.BUTTON1) programController.Tiefensuche();
+        if(e.getButton() == MouseEvent.BUTTON3) programController.reset();
     }
+
+
 
 }

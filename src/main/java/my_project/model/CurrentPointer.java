@@ -27,16 +27,16 @@ public class CurrentPointer extends GraphicalObject {
     @Override
     public void update(double dt){
             if (tX > x) {
-                x += 50 * dt;
+                x += 200 * dt;
             } else if (tX < x) {
-                x -= 50 * dt;
+                x -= 200 * dt;
             }
             if (tY > y) {
-                y += 50 * dt;
+                y += 200 * dt;
             } else if (tY < y) {
-                y -= 50 * dt;
+                y -= 200 * dt;
             }
-        if(x < tX + 5 && x > tX -5 && y < tY +5 && y > tY -5){
+        if(x < tX + 10 && x > tX -10 && y < tY + 10 && y > tY - 10){
             moving = false;
         }else{
             moving = true;
