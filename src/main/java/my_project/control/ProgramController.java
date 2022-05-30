@@ -5,6 +5,7 @@ import KAGO_framework.model.abitur.datenstrukturen.Graph;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Vertex;
 import my_project.model.CurrentPointer;
+import my_project.model.EdgeList;
 import my_project.model.EdgePath;
 import my_project.model.Rectangel;
 import my_project.view.InputManager;
@@ -26,6 +27,7 @@ public class ProgramController {
     private Rectangel r1;
     private List<Rectangel> rectangelList;
     private List<Rectangel> allRectangel;
+    private EdgeList edgeList;
 
     /**
      * Konstruktor
@@ -41,6 +43,9 @@ public class ProgramController {
         currentPointer = new CurrentPointer(120,420);
         viewController.draw(currentPointer);
 
+        edgeList = new EdgeList();
+        viewController.draw(edgeList);
+
         new InputManager(this,viewController);
         xhelp = new List<>();
         yhelp = new List<>();
@@ -53,9 +58,9 @@ public class ProgramController {
      * Sie erstellt die leeren Datenstrukturen, zu Beginn nur eine Queue
      */
     public void startProgram() {
-        // Erstelle ein Objekt der Klasse Ball und lasse es zeichnen
+        // Erstellt und zeichnet die Vertexes und Edges.
         fillGraph();
-
+        edgeList.setList(graph.getEdges());
     }
 
     public void Tiefensuche(){
@@ -77,6 +82,9 @@ public class ProgramController {
                 allRectangel.getContent().setMarked(false);
                 allRectangel.next();
             }
+            xhelp.toFirst();
+            yhelp.toFirst();
+            rectangelList.toFirst();
             while(xhelp.hasAccess()){
                 xhelp.remove();
                 yhelp.remove();
@@ -105,7 +113,7 @@ public class ProgramController {
         Rectangel r9 = new Rectangel(700,200,"9");
         graph.addVertex(r9.getVertex());
         Rectangel r10 = new Rectangel(700,600,"10");
-        graph.addVertex(r9.getVertex());
+        graph.addVertex(r10.getVertex());
         Rectangel r11 = new Rectangel(700,800,"11");
         graph.addVertex(r11.getVertex());
 
@@ -165,6 +173,8 @@ public class ProgramController {
         graph.addEdge(e910.getEdge());
         edgePathList.append(e910);
 
+
+        //Draw
         viewController.draw(r1);
         viewController.draw(r2);
         viewController.draw(r3);
@@ -176,7 +186,6 @@ public class ProgramController {
         viewController.draw(r9);
         viewController.draw(r10);
         viewController.draw(r11);
-
         viewController.draw(e12);
         viewController.draw(e14);
         viewController.draw(e25);
@@ -192,6 +201,8 @@ public class ProgramController {
         viewController.draw(e810);
         viewController.draw(e910);
     }
+
+
 
     public void Tiefensuche(Rectangel r){
         rectangelList.append(r);
@@ -214,16 +225,6 @@ public class ProgramController {
         rectangelList.append(r);
     }
 
-    public EdgePath findEgde(Rectangel r1, Rectangel r2){
-        edgePathList.toFirst();
-        while(edgePathList.hasAccess()){
-            if(edgePathList.getContent().isEdge(r1,r2)){
-                return edgePathList.getContent();
-            }
-            edgePathList.next();
-        }
-        return null;
-    }
 
     public List<Rectangel> findFriends(Rectangel r){
         List<Rectangel> result = new List<Rectangel>();
