@@ -28,6 +28,7 @@ public class ProgramController {
     private List<Rectangel> rectangelList;
     private List<Rectangel> allRectangel;
     private EdgeList edgeList;
+    private boolean automatic = false;
 
     /**
      * Konstruktor
@@ -61,6 +62,7 @@ public class ProgramController {
         // Erstellt und zeichnet die Vertexes und Edges.
         fillGraph();
         edgeList.setList(graph.getEdges());
+        Tiefensuche();
     }
 
     public void Tiefensuche(){
@@ -68,7 +70,6 @@ public class ProgramController {
         xhelp.toFirst();
         yhelp.toFirst();
         rectangelList.toFirst();
-
     }
 
     public void reset(){
@@ -82,14 +83,10 @@ public class ProgramController {
                 allRectangel.getContent().setMarked(false);
                 allRectangel.next();
             }
-            xhelp.toFirst();
-            yhelp.toFirst();
-            rectangelList.toFirst();
-            while(xhelp.hasAccess()){
-                xhelp.remove();
-                yhelp.remove();
-                rectangelList.remove();
-            }
+            xhelp = new List<>();
+            yhelp = new List<>();
+            rectangelList = new List<>();
+            automatic = false;
     }
 
     public void fillGraph(){
@@ -169,9 +166,7 @@ public class ProgramController {
         EdgePath e810 = new EdgePath(r8, r10, r8.getX()+40, r8.getY(),r10.getX(), r10.getY()+40);
         graph.addEdge(e810.getEdge());
         edgePathList.append(e810);
-        EdgePath e910 = new EdgePath(r9, r10, r9.getX()+20, r9.getY()+40,r10.getX()+20, r10.getY());
-        graph.addEdge(e910.getEdge());
-        edgePathList.append(e910);
+
 
 
         //Draw
@@ -199,10 +194,8 @@ public class ProgramController {
         viewController.draw(e78);
         viewController.draw(e710);
         viewController.draw(e810);
-        viewController.draw(e910);
+        //viewController.draw(e910);
     }
-
-
 
     public void Tiefensuche(Rectangel r){
         rectangelList.append(r);
@@ -210,10 +203,11 @@ public class ProgramController {
         List<Rectangel> friends = findFriends(r);
         friends.toFirst();
         while(friends.hasAccess()){
-            xhelp.append(r.getX()+20);
-            yhelp.append(r.getY()+20);
-            rectangelList.append(r);
+
             if(!friends.getContent().getVertex().isMarked()) {
+                xhelp.append(r.getX()+20);
+                yhelp.append(r.getY()+20);
+                rectangelList.append(r);
                 xhelp.append(friends.getContent().getX()+20);
                 yhelp.append(friends.getContent().getY()+20);
                 Tiefensuche(friends.getContent());
@@ -225,6 +219,18 @@ public class ProgramController {
         rectangelList.append(r);
     }
 
+    public void next(){
+        if(xhelp.hasAccess()){
+            currentPointer.settX(xhelp.getContent());
+            currentPointer.settY(yhelp.getContent());
+            xhelp.remove();
+            yhelp.remove();
+            if(rectangelList.hasAccess()){
+                rectangelList.getContent().setMarked(true);
+                rectangelList.remove();
+            }
+        }
+    }
 
     public List<Rectangel> findFriends(Rectangel r){
         List<Rectangel> result = new List<Rectangel>();
@@ -241,12 +247,17 @@ public class ProgramController {
         }
         return result;
     }
+
+    public void setAutomatic(boolean automatic) {
+        this.automatic = automatic;
+    }
+
     /**
      * Aufruf mit jeder Frame
      * @param dt Zeit seit letzter Frame
      */
     public void updateProgram(double dt){
-        if(xhelp.hasAccess()){
+        if(automatic && xhelp.hasAccess()){
             if(!currentPointer.isMoving()){
                 currentPointer.settX(xhelp.getContent());
                 currentPointer.settY(yhelp.getContent());
@@ -257,6 +268,9 @@ public class ProgramController {
                     rectangelList.remove();
                 }
             }
+        }
+        if(rectangelList.hasAccess()){
+            edgeList.setCurrentEdgeList(graph.getEdges(rectangelList.getContent().getVertex()));
         }
     }
 

@@ -28,10 +28,13 @@ public class InputManager extends InteractiveGraphicalObject {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(e.getButton() == MouseEvent.BUTTON1) programController.Tiefensuche();
-        if(e.getButton() == MouseEvent.BUTTON3) programController.reset();
+        if(e.getButton() == MouseEvent.BUTTON1) programController.setAutomatic(true);
+        if(e.getButton() == MouseEvent.BUTTON3) programController.next();
     }
 
-
-
+    @Override
+    public void keyPressed(int key) {
+        programController.reset();
+        programController.Tiefensuche();
+    }
 }
